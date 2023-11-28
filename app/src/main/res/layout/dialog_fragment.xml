@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_dialogcard"
+        android:layout_width="400dp"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:cardBackgroundColor="@color/white">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="25dp"
+            android:text="10 jun 2023"
+            android:textAlignment="viewEnd"
+            android:textColor="@color/more_grey"
+            android:textStyle="bold" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_courseName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="IIT JEE Physics Course"
+            android:textAlignment="center"
+            android:textColor="@color/more_grey"
+            android:textSize="25sp"
+            android:textStyle="bold"
+             />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_chapterName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:text="Electric Charge and Field"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            />
+
+        <ImageView
+            android:id="@+id/iv_milestone"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            tools:srcCompat="@tools:sample/avatars"
+            android:layout_marginTop="110dp"
+            android:layout_gravity="center_horizontal"/>
+
+        <ImageView
+            android:id="@+id/iv_tick"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:src="@drawable/tickpng"
+            android:layout_marginTop="128dp"
+            android:layout_gravity="center_horizontal"/>
+
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_userName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Aparjita Chandramoulli"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="#18B81E"
+            android:layout_marginTop="190dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_currentProgress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="has completed 75% of the Skill Builder on"
+            android:textAlignment="center"
+            android:textStyle="bold"
+            android:textColor="@color/more_grey"
+            android:layout_marginTop="210dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/tv_elementName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="230dp"
+            android:text="Electric Dipole"
+            android:textAlignment="center"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"
+            />
+
+    </com.google.android.material.card.MaterialCardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

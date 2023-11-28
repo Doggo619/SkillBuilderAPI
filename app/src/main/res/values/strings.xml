@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">SkillBuilderAPI</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="congratulation">Congratulations!</string>
+    <string name="certificate_congrats_message_with_vowels">You\'ve won a Proactive Learner Certificate</string>
+    <string name="certificate_of_achievement">Proactive Learner</string>
+    <string name="download">DOWNLOAD</string>
+    <string name="share">SHARE</string>
+
+
+
+
+
+
+
+
+    <!-- dimen -->
+    <dimen name="certificate_outer_stroke">3dp</dimen>
+    <dimen name="certificate_inner_stroke">1dp</dimen>
+</resources>
