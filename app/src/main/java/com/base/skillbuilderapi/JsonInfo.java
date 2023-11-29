@@ -1,5 +1,9 @@
 package com.base.skillbuilderapi;
 
+import com.base.skillbuilderapi.entity.ChapterEntity;
+import com.base.skillbuilderapi.entity.ElementEntity;
+import com.base.skillbuilderapi.entity.ElementProgressEntity;
+
 import java.util.List;
 
 public class JsonInfo {

@@ -1,4 +1,4 @@
-package com.base.skillbuilderapi;
+package com.base.skillbuilderapi.ui;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,6 +9,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.base.skillbuilderapi.R;
+import com.base.skillbuilderapi.entity.ChapterEntity;
+import com.base.skillbuilderapi.entity.ElementEntity;
+import com.base.skillbuilderapi.entity.ElementProgressEntity;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.ArrayList;
@@ -20,7 +24,7 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ViewHold
     private List<ChapterEntity> chapterLists;
     private OnItemClickListener onItemClickListener;
     public interface OnItemClickListener {
-        void onItemClick(ElementProgressEntity progressEntity, String chapterName);
+        void onItemClick(ElementProgressEntity progressEntity, ElementEntity elementEntity, ChapterEntity chapterEntity);
     }
 
     public void setOnItemClickListener(OnItemClickListener listener) {
@@ -33,8 +37,6 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ViewHold
         this.chapterLists = chapterLists;
     }
 
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,50 +46,59 @@ public class ChapterAdapter extends RecyclerView.Adapter<ChapterAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        ElementEntity chapter = chapterList.get(position);
+        ChapterEntity chapter = chapterLists.get(position);
         holder.tvChapterName.setText(chapter.getChapterName());
 
         List<ElementProgressEntity> progressList = getProgressListForChapter(chapter.getChapterId());
         if (progressList != null && !progressList.isEmpty()) {
-            ProgressAdapter progressAdapter = new ProgressAdapter(progressList);
-            holder.rvImages.setLayoutManager(new GridLayoutManager(holder.itemView.getContext(), 4));
-            holder.rvImages.setAdapter(progressAdapter);
-            progressAdapter.setOnItemClickListener((progressEntity) -> {
+            List<ElementEntity> filteredElementList = getElementListForChapter(chapter.getChapterId());
+            List<ChapterEntity> filteredChapterList = getChapterListForChapter(chapter.getChapterId());
+            Log.d("Chapter Adapter", "Checking in chapter adapter" + elementLists);
+            ProgressAdapter progressAdapter = new ProgressAdapter(progressList, filteredElementList, filteredChapterList);
+            progressAdapter.setOnItemClickListener((progressEntity, elementEntity, chapterEntity) -> {
                 if (onItemClickListener != null) {
-                    onItemClickListener.onItemClick(progressEntity, chapter.getChapterName());
+                    onItemClickListener.onItemClick(progressEntity, elementEntity, chapterEntity);
                 }
             });
-            Log.d("ChapterAdapter", "ProgressAdapter set for chapter: " + chapter.getChapterName());
-        } else {
-            Log.d("ChapterAdapter", "ProgressList is null or empty for chapter: " + chapter.getChapterName());
+            holder.rvImages.setLayoutManager(new GridLayoutManager(holder.itemView.getContext(), 4));
+            holder.rvImages.setAdapter(progressAdapter);
         }
-        holder.itemView.setOnClickListener(view -> {
-            if (onItemClickListener != null) {
-                int adapterPosition = holder.getAdapterPosition();
-                if (adapterPosition != RecyclerView.NO_POSITION) {
-                    List<ElementProgressEntity> progressLists = getProgressListForChapter(chapterList.get(adapterPosition).getChapterId());
-                    if (!progressLists.isEmpty()) {
-                        onItemClickListener.onItemClick(progressLists.get(0), chapterList.get(adapterPosition).getChapterName());
-                    }
-                }
-            }
-        });
-
     }
+
     private List<ElementProgressEntity> getProgressListForChapter(int chapterId) {
         List<ElementProgressEntity> filteredList = new ArrayList<>();
 
         for (ElementProgressEntity progressEntity : progressLists) {
-            if (progressEntity.getChapterId() == chapterId) {
-                filteredList.add(progressEntity);
+            for (ElementEntity elementEntity : elementLists) {
+                if (progressEntity.getChapterId() == chapterId && elementEntity.getChapterId() == chapterId) {
+                    filteredList.add(progressEntity);
+                }
+            }
+        }
+        return filteredList;
+    }
+    private List<ElementEntity> getElementListForChapter(int chapterId) {
+        List<ElementEntity> filteredList = new ArrayList<>();
+        for (ElementEntity elementEntity : elementLists) {
+            if (elementEntity.getChapterId() == chapterId) {
+                filteredList.add(elementEntity);
             }
         }
         return filteredList;
     }
 
+    private List<ChapterEntity> getChapterListForChapter(int chapterId) {
+        List<ChapterEntity> filteredList = new ArrayList<>();
+        for (ChapterEntity chapterEntity : chapterLists) {
+            if (chapterEntity.getChapterId() == chapterId) {
+                filteredList.add(chapterEntity);
+            }
+        }
+        return filteredList;
+    }
     @Override
     public int getItemCount() {
-        return chapterList.size() != 0 ? chapterList.size() : 0;
+        return chapterLists.size() != 0 ? chapterLists.size() : 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

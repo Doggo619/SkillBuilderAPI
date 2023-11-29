@@ -1,16 +1,8 @@
-package com.base.skillbuilderapi;
-
-import androidx.room.Entity;
-import androidx.room.Index;
-import androidx.room.PrimaryKey;
+package com.base.skillbuilderapi.model.elementProgress;
 
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "CHAPTER", indices = {@Index(name = "INDEX_CHAPTER", value = {"chapterId"},
-        unique = true)})
-public class ChapterEntity {
-    @PrimaryKey(autoGenerate = true)
-    private int id;
+public class Chapter {
     @SerializedName("chapter_id")
     private int chapterId;
     @SerializedName("chapter_name")
@@ -20,12 +12,11 @@ public class ChapterEntity {
     @SerializedName("deleted")
     private int deleted;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public Chapter(int chapterId, String chapterName, int displayId, int deleted) {
+        this.chapterId = chapterId;
+        this.chapterName = chapterName;
+        this.displayId = displayId;
+        this.deleted = deleted;
     }
 
     public int getChapterId() {

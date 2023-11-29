@@ -6,6 +6,13 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.base.skillbuilderapi.dao.ChapterDao;
+import com.base.skillbuilderapi.dao.ElementDao;
+import com.base.skillbuilderapi.dao.ElementProgressDao;
+import com.base.skillbuilderapi.entity.ChapterEntity;
+import com.base.skillbuilderapi.entity.ElementEntity;
+import com.base.skillbuilderapi.entity.ElementProgressEntity;
+
 @Database(entities = {ElementProgressEntity.class, ElementEntity.class, ChapterEntity.class}, version = 1)
 public abstract class AppDatabase extends RoomDatabase {
     public abstract ElementProgressDao elementProgressDao();

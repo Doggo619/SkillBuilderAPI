@@ -1,4 +1,4 @@
-package com.base.skillbuilderapi;
+package com.base.skillbuilderapi.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.LiveData;
@@ -12,6 +12,15 @@ import android.util.Log;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.base.skillbuilderapi.JsonInfo;
+import com.base.skillbuilderapi.MockJson;
+import com.base.skillbuilderapi.PicassoCircleTransformation;
+import com.base.skillbuilderapi.R;
+import com.base.skillbuilderapi.entity.ChapterEntity;
+import com.base.skillbuilderapi.entity.ElementEntity;
+import com.base.skillbuilderapi.entity.ElementProgressEntity;
+import com.base.skillbuilderapi.model.errorHandling.ApiStatusResponse;
+import com.base.skillbuilderapi.model.errorHandling.Resource;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -41,21 +50,29 @@ public class MainActivity extends AppCompatActivity {
 
         viewModel = new ViewModelProvider(this).get(MyViewModel.class);
 
+        viewModel.getElementProgressApi().observe(this, this::handleElementProgress);
+
+
         String jsonString = MockJson.JSON_DATA;
         Log.d("MainActivity", "JSON Data: " + jsonString);
         JsonInfo jsonInfo = new Gson().fromJson(jsonString, JsonInfo.class);
 
-        Handler handler = new Handler();
-        ExecutorService databaseWriteExecutor =
-                Executors.newSingleThreadExecutor();
-        databaseWriteExecutor.execute(() -> {
-            viewModel.insertData(jsonInfo);
-            handler.post(() -> {
-                Toast.makeText(this, "Data Inserted", Toast.LENGTH_SHORT).show();
-                observeDataChanges();
-            });
-        });
+//        Handler handler = new Handler();
+//        ExecutorService databaseWriteExecutor =
+//                Executors.newSingleThreadExecutor();
+//        databaseWriteExecutor.execute(() -> {
+//            viewModel.insertData(jsonInfo);
+//            handler.post(() -> {
+//                Toast.makeText(this, "Data Inserted", Toast.LENGTH_SHORT).show();
+//                observeDataChanges();
+//            });
+//        });
     }
+
+    private void handleElementProgress(Resource<ApiStatusResponse> apiStatusResponseResource) {
+
+    }
+
 
     private void observeDataChanges() {
         LiveData<List<ElementProgressEntity>> progressLiveData = viewModel.getAllElementProgress();
@@ -82,8 +99,22 @@ public class MainActivity extends AppCompatActivity {
 
         if (elementProgressEntities != null && elementEntities != null && chapterEntities != null) {
             chapterAdapter = new ChapterAdapter(elementProgressEntities, elementEntities, chapterEntities);
+            chapterAdapter.setOnItemClickListener((progressEntity, elementEntity, chapterEntity) -> {
+                showDialog(progressEntity, elementEntity, chapterEntity);
+            });
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
             recyclerView.setAdapter(chapterAdapter);
         }
+    }
+
+    public void showDialog(ElementProgressEntity progressEntity, ElementEntity elementEntity, ChapterEntity chapterEntity) {
+        DialogFragment dialog = new DialogFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelable("progressEntity", progressEntity);
+        bundle.putParcelable("elementEntity", elementEntity);
+        bundle.putParcelable("chapterEntity", chapterEntity);
+        dialog.setArguments(bundle);
+
+        dialog.show(getSupportFragmentManager(), "ProgressDetailsDialog");
     }
 }

@@ -1,5 +1,9 @@
-package com.base.skillbuilderapi;
+package com.base.skillbuilderapi.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
@@ -8,7 +12,7 @@ import com.google.gson.annotations.SerializedName;
 
 @Entity(tableName = "ELEMENT", indices = {@Index(name = "INDEX_ELEMENT", value = {"elementId", "chapterId", "elementType"},
         unique = true)})
-public class ElementEntity {
+public class ElementEntity implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     @SerializedName("element_id")
@@ -25,6 +29,39 @@ public class ElementEntity {
     private String elementName;
     @SerializedName("element_is_deleted")
     private int elementIsDeleted;
+
+    public ElementEntity(int elementId, int chapterId, int displayId, int elementType, int sbType, String elementName, int elementIsDeleted) {
+        this.elementId = elementId;
+        this.chapterId = chapterId;
+        this.displayId = displayId;
+        this.elementType = elementType;
+        this.sbType = sbType;
+        this.elementName = elementName;
+        this.elementIsDeleted = elementIsDeleted;
+    }
+
+    protected ElementEntity(Parcel in) {
+        id = in.readInt();
+        elementId = in.readInt();
+        chapterId = in.readInt();
+        displayId = in.readInt();
+        elementType = in.readInt();
+        sbType = in.readInt();
+        elementName = in.readString();
+        elementIsDeleted = in.readInt();
+    }
+
+    public static final Creator<ElementEntity> CREATOR = new Creator<ElementEntity>() {
+        @Override
+        public ElementEntity createFromParcel(Parcel in) {
+            return new ElementEntity(in);
+        }
+
+        @Override
+        public ElementEntity[] newArray(int size) {
+            return new ElementEntity[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -89,4 +126,22 @@ public class ElementEntity {
     public void setElementIsDeleted(int elementIsDeleted) {
         this.elementIsDeleted = elementIsDeleted;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeInt(elementId);
+        dest.writeInt(chapterId);
+        dest.writeInt(displayId);
+        dest.writeInt(elementType);
+        dest.writeInt(sbType);
+        dest.writeString(elementName);
+        dest.writeInt(elementIsDeleted);
+    }
+
 }

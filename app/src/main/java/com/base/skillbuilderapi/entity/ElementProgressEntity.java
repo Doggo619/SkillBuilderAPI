@@ -1,16 +1,18 @@
-package com.base.skillbuilderapi;
+package com.base.skillbuilderapi.entity;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.annotations.SerializedName;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import com.google.gson.annotations.SerializedName;
-
 @Entity(tableName = "ELEMENT_PROGRESS", indices = {@Index(name = "INDEX_ELEMENT_PROGRESS", value = {"chapterId", "elementId", "elementType"},
         unique = true)})
-public class ElementProgressEntity {
+public class ElementProgressEntity implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int id;
     @SerializedName("chapter_id")
@@ -33,6 +35,45 @@ public class ElementProgressEntity {
     private int certificateEarned;
     @SerializedName("certificate_date")
     private long certificateDate;
+
+    public ElementProgressEntity(int chapterId, int elementId, int elementType, String userName, int milestoneLevel, long milestoneDate, int currentProgress, int maxStar, int certificateEarned, long certificateDate) {
+        this.chapterId = chapterId;
+        this.elementId = elementId;
+        this.elementType = elementType;
+        this.userName = userName;
+        this.milestoneLevel = milestoneLevel;
+        this.milestoneDate = milestoneDate;
+        this.currentProgress = currentProgress;
+        this.maxStar = maxStar;
+        this.certificateEarned = certificateEarned;
+        this.certificateDate = certificateDate;
+    }
+
+    protected ElementProgressEntity(Parcel in) {
+        id = in.readInt();
+        chapterId = in.readInt();
+        elementId = in.readInt();
+        elementType = in.readInt();
+        userName = in.readString();
+        milestoneLevel = in.readInt();
+        milestoneDate = in.readLong();
+        currentProgress = in.readInt();
+        maxStar = in.readInt();
+        certificateEarned = in.readInt();
+        certificateDate = in.readLong();
+    }
+
+    public static final Creator<ElementProgressEntity> CREATOR = new Creator<ElementProgressEntity>() {
+        @Override
+        public ElementProgressEntity createFromParcel(Parcel in) {
+            return new ElementProgressEntity(in);
+        }
+
+        @Override
+        public ElementProgressEntity[] newArray(int size) {
+            return new ElementProgressEntity[size];
+        }
+    };
 
     public int getId() {
         return id;
@@ -137,4 +178,25 @@ public class ElementProgressEntity {
                 ", certificateDate=" + certificateDate +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeInt(chapterId);
+        dest.writeInt(elementId);
+        dest.writeInt(elementType);
+        dest.writeString(userName);
+        dest.writeInt(milestoneLevel);
+        dest.writeLong(milestoneDate);
+        dest.writeInt(currentProgress);
+        dest.writeInt(maxStar);
+        dest.writeInt(certificateEarned);
+        dest.writeLong(certificateDate);
+    }
+
 }
