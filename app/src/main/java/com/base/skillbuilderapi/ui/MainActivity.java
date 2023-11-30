@@ -19,8 +19,10 @@ import com.base.skillbuilderapi.R;
 import com.base.skillbuilderapi.entity.ChapterEntity;
 import com.base.skillbuilderapi.entity.ElementEntity;
 import com.base.skillbuilderapi.entity.ElementProgressEntity;
+import com.base.skillbuilderapi.model.elementProgressList.ChapterList;
 import com.base.skillbuilderapi.model.errorHandling.ApiStatusResponse;
 import com.base.skillbuilderapi.model.errorHandling.Resource;
+import com.base.skillbuilderapi.repository.MyRepository;
 import com.google.gson.Gson;
 import com.squareup.picasso.Picasso;
 
@@ -48,14 +50,31 @@ public class MainActivity extends AppCompatActivity {
                 .transform(new PicassoCircleTransformation())
                 .into(profilePicture);
 
-        viewModel = new ViewModelProvider(this).get(MyViewModel.class);
+        MyRepository repository = new MyRepository(getApplication(), getApplicationContext());
+
+        viewModel = new ViewModelProvider(this, new MyViewModelFactory(getApplication(), repository)).get(MyViewModel.class);
+
 
         viewModel.getElementProgressApi().observe(this, this::handleElementProgress);
+
+        viewModel.getChapterElementProgress().observe(this, this::handleChapterElementProgressList);
 
 
         String jsonString = MockJson.JSON_DATA;
         Log.d("MainActivity", "JSON Data: " + jsonString);
         JsonInfo jsonInfo = new Gson().fromJson(jsonString, JsonInfo.class);
+
+            ChapterAdapter.OnItemClickListener listener = new ChapterAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(ElementProgressEntity progressEntity, ElementEntity elementEntity, ChapterEntity chapterEntity) {
+//                    showDialog(progressEntity, elementEntity, chapterEntity);
+                }
+            };
+            chapterAdapter = new ChapterAdapter(getApplicationContext(), listener);
+            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+            recyclerView.setAdapter(chapterAdapter);
+
+
 
 //        Handler handler = new Handler();
 //        ExecutorService databaseWriteExecutor =
@@ -69,8 +88,14 @@ public class MainActivity extends AppCompatActivity {
 //        });
     }
 
-    private void handleElementProgress(Resource<ApiStatusResponse> apiStatusResponseResource) {
+    private void handleChapterElementProgressList(List<ChapterList> chapterLists) {
+        if (!chapterLists.isEmpty()) {
+            chapterAdapter.submitList(chapterLists);
+        }
+    }
 
+    private void handleElementProgress(Resource<ApiStatusResponse> apiStatusResponseResource) {
+//        observeDataChanges();
     }
 
 
@@ -97,14 +122,14 @@ public class MainActivity extends AppCompatActivity {
         List<ElementEntity> elementEntities = viewModel.getAllElement().getValue();
         List<ChapterEntity> chapterEntities = viewModel.getAllChapter().getValue();
 
-        if (elementProgressEntities != null && elementEntities != null && chapterEntities != null) {
-            chapterAdapter = new ChapterAdapter(elementProgressEntities, elementEntities, chapterEntities);
-            chapterAdapter.setOnItemClickListener((progressEntity, elementEntity, chapterEntity) -> {
-                showDialog(progressEntity, elementEntity, chapterEntity);
-            });
-            recyclerView.setLayoutManager(new LinearLayoutManager(this));
-            recyclerView.setAdapter(chapterAdapter);
-        }
+//        if (elementProgressEntities != null && elementEntities != null && chapterEntities != null) {
+//            chapterAdapter = new ChapterAdapter(getApplicationContext());
+//            chapterAdapter.setOnItemClickListener((progressEntity, elementEntity, chapterEntity) -> {
+//                showDialog(progressEntity, elementEntity, chapterEntity);
+//            });
+//            recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//            recyclerView.setAdapter(chapterAdapter);
+//        }
     }
 
     public void showDialog(ElementProgressEntity progressEntity, ElementEntity elementEntity, ChapterEntity chapterEntity) {

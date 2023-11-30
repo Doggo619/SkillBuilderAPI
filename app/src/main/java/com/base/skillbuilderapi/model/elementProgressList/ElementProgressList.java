@@ -1,14 +1,22 @@
-package com.base.skillbuilderapi.model.elementProgress;
+package com.base.skillbuilderapi.model.elementProgressList;
 
 import com.google.gson.annotations.SerializedName;
 
-public class ElementProgress {
-    @SerializedName("chapter_id")
-    private int chapterId;
+public class ElementProgressList {
     @SerializedName("element_id")
     private int elementId;
+    @SerializedName("chapter_id")
+    private int chapterId;
+    @SerializedName("display_id")
+    private int displayId;
     @SerializedName("element_type")
     private int elementType;
+    @SerializedName("sb_type")
+    private int sbType;
+    @SerializedName("element_name")
+    private String elementName;
+    @SerializedName("element_is_deleted")
+    private int elementIsDeleted;
     @SerializedName("user_name")
     private String userName;
     @SerializedName("milestone_level")
@@ -24,10 +32,14 @@ public class ElementProgress {
     @SerializedName("certificate_date")
     private long certificateDate;
 
-    public ElementProgress(int chapterId, int elementId, int elementType, String userName, int milestoneLevel, long milestoneDate, int currentProgress, int maxStar, int certificateEarned, long certificateDate) {
-        this.chapterId = chapterId;
+    public ElementProgressList(int elementId, int chapterId, int displayId, int elementType, int sbType, String elementName, int elementIsDeleted, String userName, int milestoneLevel, long milestoneDate, int currentProgress, int maxStar, int certificateEarned, long certificateDate) {
         this.elementId = elementId;
+        this.chapterId = chapterId;
+        this.displayId = displayId;
         this.elementType = elementType;
+        this.sbType = sbType;
+        this.elementName = elementName;
+        this.elementIsDeleted = elementIsDeleted;
         this.userName = userName;
         this.milestoneLevel = milestoneLevel;
         this.milestoneDate = milestoneDate;
@@ -35,14 +47,6 @@ public class ElementProgress {
         this.maxStar = maxStar;
         this.certificateEarned = certificateEarned;
         this.certificateDate = certificateDate;
-    }
-
-    public int getChapterId() {
-        return chapterId;
-    }
-
-    public void setChapterId(int chapterId) {
-        this.chapterId = chapterId;
     }
 
     public int getElementId() {
@@ -53,12 +57,52 @@ public class ElementProgress {
         this.elementId = elementId;
     }
 
+    public int getChapterId() {
+        return chapterId;
+    }
+
+    public void setChapterId(int chapterId) {
+        this.chapterId = chapterId;
+    }
+
+    public int getDisplayId() {
+        return displayId;
+    }
+
+    public void setDisplayId(int displayId) {
+        this.displayId = displayId;
+    }
+
     public int getElementType() {
         return elementType;
     }
 
     public void setElementType(int elementType) {
         this.elementType = elementType;
+    }
+
+    public int getSbType() {
+        return sbType;
+    }
+
+    public void setSbType(int sbType) {
+        this.sbType = sbType;
+    }
+
+    public String getElementName() {
+        return elementName;
+    }
+
+    public void setElementName(String elementName) {
+        this.elementName = elementName;
+    }
+
+    public int getElementIsDeleted() {
+        return elementIsDeleted;
+    }
+
+    public void setElementIsDeleted(int elementIsDeleted) {
+        this.elementIsDeleted = elementIsDeleted;
     }
 
     public String getUserName() {

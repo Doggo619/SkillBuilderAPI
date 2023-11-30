@@ -1,4 +1,4 @@
-package com.base.skillbuilderapi.model.elementProgress;
+package com.base.skillbuilderapi.model.elementProgressApi;
 
 import com.google.gson.annotations.SerializedName;
 

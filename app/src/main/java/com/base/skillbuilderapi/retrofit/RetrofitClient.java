@@ -10,27 +10,26 @@ public class RetrofitClient {
     public static RetrofitClient retrofitClient;
     public ApiService apiService;
     public static final String BASE_URL = "https://api.example.com/";
-    public static synchronized RetrofitClient getInstance(Context context) {
-        if (retrofitClient == null) {
-            retrofitClient = new RetrofitClient();
-        }
-        return retrofitClient;
+    public RetrofitClient(Context context) {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        apiService = retrofit.create(ApiService.class);
     }
 
-    public static Retrofit getRetrofitInstance() {
-        if (retrofit == null) {
-            retrofit = new Retrofit.Builder()
-                    .baseUrl(BASE_URL)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .build();
-        }
-        return retrofit;
+    public static synchronized RetrofitClient getInstance(Context context) {
+        return new RetrofitClient(context);
     }
 
     public ApiService getApiService() {
-        if (apiService != null) {
+        if (apiService == null) {
             apiService = retrofit.create(ApiService.class);
         }
         return apiService;
+    }
+
+    public Retrofit getRetrofitInstance() {
+        return retrofit;
     }
 }

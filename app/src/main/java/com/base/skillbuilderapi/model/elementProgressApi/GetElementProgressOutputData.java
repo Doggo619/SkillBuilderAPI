@@ -1,6 +1,5 @@
-package com.base.skillbuilderapi.model.elementProgress;
+package com.base.skillbuilderapi.model.elementProgressApi;
 
-import com.base.skillbuilderapi.entity.ElementProgressEntity;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;

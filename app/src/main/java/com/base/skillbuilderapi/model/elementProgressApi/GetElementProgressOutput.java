@@ -1,6 +1,5 @@
-package com.base.skillbuilderapi.model.elementProgress;
+package com.base.skillbuilderapi.model.elementProgressApi;
 
-import com.base.skillbuilderapi.JsonInfo;
 import com.base.skillbuilderapi.MockJson;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;

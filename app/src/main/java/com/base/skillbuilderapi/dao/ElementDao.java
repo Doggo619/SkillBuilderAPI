@@ -20,4 +20,7 @@ public interface ElementDao {
     LiveData<List<ElementEntity>> getAllElements();
     @Query("DELETE FROM ELEMENT")
     void clearAll();
+
+
+
 }

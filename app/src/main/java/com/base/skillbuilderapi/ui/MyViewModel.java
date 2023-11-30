@@ -1,12 +1,14 @@
 package com.base.skillbuilderapi.ui;
 
 import android.app.Application;
+import android.os.Handler;
 
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.base.skillbuilderapi.JsonInfo;
+import com.base.skillbuilderapi.model.elementProgressList.ChapterList;
 import com.base.skillbuilderapi.model.errorHandling.ApiStatusResponse;
 import com.base.skillbuilderapi.model.errorHandling.Resource;
 import com.base.skillbuilderapi.repository.MyRepository;
@@ -22,6 +24,7 @@ public class MyViewModel extends AndroidViewModel {
     private final LiveData<List<ElementEntity>> allElement;
     private final LiveData<List<ChapterEntity>> allChapter;
     private final MutableLiveData<JsonInfo> mockJsonLiveData = new MutableLiveData<>();
+    Handler handler;
 
     public MyViewModel(Application application, MyRepository repository) {
         super(application);
@@ -48,5 +51,12 @@ public class MyViewModel extends AndroidViewModel {
     public void updateMockJson(JsonInfo jsonInfo) {
         mockJsonLiveData.setValue(jsonInfo);
     }
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+    }
 
+    public LiveData<List<ChapterList>> getChapterElementProgress() {
+        return repository.getChapterElementProgress();
+    }
 }
