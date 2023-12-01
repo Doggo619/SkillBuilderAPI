@@ -14,6 +14,7 @@ import com.base.skillbuilderapi.R;
 import com.base.skillbuilderapi.entity.ChapterEntity;
 import com.base.skillbuilderapi.entity.ElementEntity;
 import com.base.skillbuilderapi.entity.ElementProgressEntity;
+import com.base.skillbuilderapi.model.elementProgressList.ElementProgressList;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.util.Date;
@@ -37,12 +38,12 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
 
         Bundle args = getArguments();
         if (args != null) {
-            ElementProgressEntity progressEntity = args.getParcelable("progressEntity");
-            ElementEntity elementEntity = args.getParcelable("elementEntity");
-            ChapterEntity chapterEntity = args.getParcelable("chapterEntity");
 
+            String elementProgressStr = args.getString("ElementProgressList");
+            String chapterNameStr = args.getString("chapterName");
+            ElementProgressList elementProgress = ElementProgressList.fromJson(elementProgressStr);
 
-            long dateFormat = progressEntity.getCertificateDate();
+            long dateFormat = elementProgress.getCertificateDate();
             Date date1 = new Date(dateFormat * 1000);
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
                 SimpleDateFormat sdf =  new SimpleDateFormat("dd MMM yyyy");
@@ -50,11 +51,11 @@ public class DialogFragment extends androidx.fragment.app.DialogFragment {
                 date.setText(formatedDate);
             }
 
-            chapterName.setText(chapterEntity.getChapterName());
-            userName.setText(progressEntity.getUserName());
-            currentProgress.setText("has completed " + progressEntity.getCurrentProgress() + "% of the Skill Builder on");
-            elementName.setText(elementEntity.getElementName());
-            int milestoneLevel = progressEntity.getMilestoneLevel();
+            chapterName.setText(chapterNameStr);
+            userName.setText(elementProgress.getUserName());
+            currentProgress.setText("has completed " + elementProgress.getCurrentProgress() + "% of the Skill Builder on");
+            elementName.setText(elementProgress.getElementName());
+            int milestoneLevel = elementProgress.getMilestoneLevel();
             switch (milestoneLevel) {
                 case 0:
                     milestone.setImageResource(R.drawable.milestone_0);

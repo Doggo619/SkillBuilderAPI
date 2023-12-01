@@ -17,6 +17,7 @@ import com.base.skillbuilderapi.entity.ChapterEntity;
 import com.base.skillbuilderapi.entity.ElementEntity;
 import com.base.skillbuilderapi.entity.ElementProgressEntity;
 import com.base.skillbuilderapi.model.elementProgressList.ChapterList;
+import com.base.skillbuilderapi.model.elementProgressList.ElementProgressList;
 import com.google.android.material.textview.MaterialTextView;
 
 import org.jetbrains.annotations.NotNull;
@@ -30,12 +31,13 @@ public class ChapterAdapter extends ListAdapter<ChapterList, ChapterAdapter.View
     private List<ChapterEntity> chapterLists;
     private OnItemClickListener onItemClickListener;
     private Context context;
+
     public interface OnItemClickListener {
-        void onItemClick(ElementProgressEntity progressEntity, ElementEntity elementEntity, ChapterEntity chapterEntity);
+        void onItemClick(ElementProgressList elementProgressList, String chapterName);
     }
 
 
-    private static final DiffUtil.ItemCallback<ChapterList> STAT_ITEM_CALLBACK = new DiffUtil.ItemCallback<ChapterList>() {
+    private static final DiffUtil.ItemCallback<ChapterList> CHAPTER_ITEM_CALLBACK = new DiffUtil.ItemCallback<ChapterList>() {
         @Override
         public boolean areItemsTheSame(@NonNull @NotNull ChapterList oldItem, @NonNull @NotNull ChapterList newItem) {
             return oldItem.getChapterId() == newItem.getChapterId();
@@ -48,7 +50,7 @@ public class ChapterAdapter extends ListAdapter<ChapterList, ChapterAdapter.View
     };
 
     protected ChapterAdapter(Context context, OnItemClickListener onItemClickListener) {
-        super(STAT_ITEM_CALLBACK);
+        super(CHAPTER_ITEM_CALLBACK);
         this.onItemClickListener = onItemClickListener;
         this.context = context;
     }
@@ -65,21 +67,20 @@ public class ChapterAdapter extends ListAdapter<ChapterList, ChapterAdapter.View
 //        ChapterEntity chapter = chapterLists.get(position);
         ChapterList chapter = getItem(position);
         holder.tvChapterName.setText(chapter.getChapterName());
-
-////        List<ElementProgressEntity> progressList = getProgressListForChapter(chapter.getChapterId());
-////        if (progressList != null && !progressList.isEmpty()) {
-//            List<ElementEntity> filteredElementList = getElementListForChapter(chapter.getChapterId());
-//            List<ChapterEntity> filteredChapterList = getChapterListForChapter(chapter.getChapterId());
-//            Log.d("Chapter Adapter", "Checking in chapter adapter" + elementLists);
-//            ProgressAdapter progressAdapter = new ProgressAdapter(progressList, filteredElementList, filteredChapterList);
-//            progressAdapter.setOnItemClickListener((progressEntity, elementEntity, chapterEntity) -> {
-//                if (onItemClickListener != null) {
-//                    onItemClickListener.onItemClick(progressEntity, elementEntity, chapterEntity);
-//                }
-//            });
-//            holder.rvImages.setLayoutManager(new GridLayoutManager(holder.itemView.getContext(), 4));
-//            holder.rvImages.setAdapter(progressAdapter);
-////        }
+        ProgressAdapter.OnItemClickListener listener = new ProgressAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(ElementProgressList elementProgressList) {
+                onItemClickListener.onItemClick(elementProgressList, chapter.getChapterName());
+            }
+        };
+        ProgressAdapter progressAdapter = new ProgressAdapter(context, listener);
+        holder.rvImages.setLayoutManager(new GridLayoutManager(holder.itemView.getContext(), 4));
+        holder.rvImages.setAdapter(progressAdapter);
+        Log.d("Chaper Adapter", "Checking list1" + chapter.getElementProgressList().size());
+        if (!chapter.getElementProgressList().isEmpty()) {
+            Log.d("Chaper Adapter", "Checking list2" + chapter.getElementProgressList().size());
+            progressAdapter.submitList(chapter.getElementProgressList());
+        }
     }
 
     private List<ElementProgressEntity> getProgressListForChapter(int chapterId) {
@@ -94,6 +95,7 @@ public class ChapterAdapter extends ListAdapter<ChapterList, ChapterAdapter.View
         }
         return filteredList;
     }
+
     private List<ElementEntity> getElementListForChapter(int chapterId) {
         List<ElementEntity> filteredList = new ArrayList<>();
         for (ElementEntity elementEntity : elementLists) {

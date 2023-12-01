@@ -4,8 +4,10 @@ import androidx.room.TypeConverter;
 import androidx.room.TypeConverters;
 
 import com.base.skillbuilderapi.converter.DataConverter;
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
 import java.util.Objects;
 
 public class ChapterList {
@@ -19,15 +21,15 @@ public class ChapterList {
     private int deleted;
     @SerializedName("element_progress")
     @TypeConverters(DataConverter.class)
-    private ElementProgressList elementProgressList;
+    private List<ElementProgressList> elementProgressList;
 
-    public ChapterList(int chapterId, String chapterName, int displayId, int deleted, ElementProgressList elementProgressList) {
-        this.chapterId = chapterId;
-        this.chapterName = chapterName;
-        this.displayId = displayId;
-        this.deleted = deleted;
-        this.elementProgressList = elementProgressList;
-    }
+//    public ChapterList(int chapterId, String chapterName, int displayId, int deleted, List<ElementProgressList> elementProgressList) {
+//        this.chapterId = chapterId;
+//        this.chapterName = chapterName;
+//        this.displayId = displayId;
+//        this.deleted = deleted;
+//        this.elementProgressList = elementProgressList;
+//    }
 
     public int getChapterId() {
         return chapterId;
@@ -61,11 +63,11 @@ public class ChapterList {
         this.deleted = deleted;
     }
 
-    public ElementProgressList getElementProgressList() {
+    public List<ElementProgressList> getElementProgressList() {
         return elementProgressList;
     }
 
-    public void setElementProgressList(ElementProgressList elementProgressList) {
+    public void setElementProgressList(List<ElementProgressList> elementProgressList) {
         this.elementProgressList = elementProgressList;
     }
 
@@ -77,9 +79,14 @@ public class ChapterList {
         return chapterId == that.chapterId && displayId == that.displayId && deleted == that.deleted && Objects.equals(chapterName, that.chapterName) && Objects.equals(elementProgressList, that.elementProgressList);
     }
 
+
     @Override
     public int hashCode() {
         return Objects.hash(chapterId, chapterName, displayId, deleted, elementProgressList);
+    }
+    public String toJson() {
+        Gson gson = new Gson();
+        return gson.toJson(this);
     }
 }
 

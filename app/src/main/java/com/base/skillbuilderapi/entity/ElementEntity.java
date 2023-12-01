@@ -4,31 +4,44 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import com.google.gson.annotations.SerializedName;
-
-@Entity(tableName = "ELEMENT", indices = {@Index(name = "INDEX_ELEMENT", value = {"elementId", "chapterId", "elementType"},
+@Entity(tableName = "ELEMENT", indices = {@Index(name = "INDEX_ELEMENT", value = {"element_id", "chapter_id", "element_type"},
         unique = true)})
 public class ElementEntity implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    @SerializedName("element_id")
+    @ColumnInfo(name ="element_id")
     private int elementId;
-    @SerializedName("chapter_id")
+    @ColumnInfo(name ="chapter_id")
     private int chapterId;
-    @SerializedName("display_id")
+    @ColumnInfo(name ="display_id")
     private int displayId;
-    @SerializedName("element_type")
+    @ColumnInfo(name ="element_type")
     private int elementType;
-    @SerializedName("sb_type")
+    @ColumnInfo(name ="sb_type")
     private int sbType;
-    @SerializedName("element_name")
+    @ColumnInfo(name ="element_name")
     private String elementName;
-    @SerializedName("element_is_deleted")
+    @ColumnInfo(name ="element_is_deleted")
     private int elementIsDeleted;
+    @ColumnInfo(name ="user_name")
+    private String userName;
+    @ColumnInfo(name ="milestone_level")
+    private int milestoneLevel;
+    @ColumnInfo(name ="milestone_date")
+    private long milestoneDate;
+    @ColumnInfo(name ="current_progress")
+    private int currentProgress;
+    @ColumnInfo(name ="max_star")
+    private int maxStar;
+    @ColumnInfo(name ="certificate_earned")
+    private int certificateEarned;
+    @ColumnInfo(name ="certificate_date")
+    private long certificateDate;
 
     public ElementEntity(int elementId, int chapterId, int displayId, int elementType, int sbType, String elementName, int elementIsDeleted) {
         this.elementId = elementId;
@@ -49,6 +62,13 @@ public class ElementEntity implements Parcelable {
         sbType = in.readInt();
         elementName = in.readString();
         elementIsDeleted = in.readInt();
+        userName = in.readString();
+        milestoneLevel = in.readInt();
+        milestoneDate = in.readLong();
+        currentProgress = in.readInt();
+        maxStar = in.readInt();
+        certificateEarned = in.readInt();
+        certificateDate = in.readLong();
     }
 
     public static final Creator<ElementEntity> CREATOR = new Creator<ElementEntity>() {
@@ -127,6 +147,62 @@ public class ElementEntity implements Parcelable {
         this.elementIsDeleted = elementIsDeleted;
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public int getMilestoneLevel() {
+        return milestoneLevel;
+    }
+
+    public void setMilestoneLevel(int milestoneLevel) {
+        this.milestoneLevel = milestoneLevel;
+    }
+
+    public long getMilestoneDate() {
+        return milestoneDate;
+    }
+
+    public void setMilestoneDate(long milestoneDate) {
+        this.milestoneDate = milestoneDate;
+    }
+
+    public int getCurrentProgress() {
+        return currentProgress;
+    }
+
+    public void setCurrentProgress(int currentProgress) {
+        this.currentProgress = currentProgress;
+    }
+
+    public int getMaxStar() {
+        return maxStar;
+    }
+
+    public void setMaxStar(int maxStar) {
+        this.maxStar = maxStar;
+    }
+
+    public int getCertificateEarned() {
+        return certificateEarned;
+    }
+
+    public void setCertificateEarned(int certificateEarned) {
+        this.certificateEarned = certificateEarned;
+    }
+
+    public long getCertificateDate() {
+        return certificateDate;
+    }
+
+    public void setCertificateDate(long certificateDate) {
+        this.certificateDate = certificateDate;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -142,6 +218,12 @@ public class ElementEntity implements Parcelable {
         dest.writeInt(sbType);
         dest.writeString(elementName);
         dest.writeInt(elementIsDeleted);
+        dest.writeString(userName);
+        dest.writeInt(milestoneLevel);
+        dest.writeLong(milestoneDate);
+        dest.writeInt(currentProgress);
+        dest.writeInt(maxStar);
+        dest.writeInt(certificateEarned);
+        dest.writeLong(certificateDate);
     }
-
 }

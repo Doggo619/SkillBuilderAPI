@@ -4,24 +4,24 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = "CHAPTER", indices = {@Index(name = "INDEX_CHAPTER", value = {"chapterId"},
+@Entity(tableName = "CHAPTER", indices = {@Index(name = "INDEX_CHAPTER", value = {"chapter_id"},
         unique = true)})
 public class ChapterEntity implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    @SerializedName("chapter_id")
+    @ColumnInfo(name ="chapter_id")
     private int chapterId;
-    @SerializedName("chapter_name")
+    @ColumnInfo(name ="chapter_name")
     private String chapterName;
-    @SerializedName("display_id")
+    @ColumnInfo(name ="display_id")
     private int displayId;
-    @SerializedName("deleted")
+    @ColumnInfo(name ="deleted")
     private int deleted;
 
     public ChapterEntity(int chapterId, String chapterName, int displayId, int deleted) {

@@ -7,6 +7,7 @@ import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
 import com.base.skillbuilderapi.entity.ChapterEntity;
+import com.base.skillbuilderapi.model.elementProgressList.ChapterElementList;
 import com.base.skillbuilderapi.model.elementProgressList.ChapterList;
 
 import java.util.List;
@@ -20,6 +21,6 @@ public interface ChapterDao {
     LiveData<List<ChapterEntity>> getAllChapters();
     @Query("DELETE FROM CHAPTER")
     void clearAll();
-    @Query("SELECT CHAPTER.chapterId AS chapterId, CHAPTER.chapterName AS chapterName, CHAPTER.displayId AS displayId, CHAPTER.deleted AS deleted, ELEMENT.elementId AS elementId, ELEMENT.chapterId AS elementChapterId, ELEMENT.displayId AS elementDisplayId, ELEMENT.elementType AS elementType, ELEMENT.sbType AS sbType, ELEMENT.elementName AS elementName, ELEMENT.elementIsDeleted AS elementIsDeleted, ELEMENT_PROGRESS.userName AS userName, ELEMENT_PROGRESS.milestoneLevel AS milestoneLevel, ELEMENT_PROGRESS.milestoneDate AS milestoneDate, ELEMENT_PROGRESS.currentProgress AS currentProgress, ELEMENT_PROGRESS.maxStar AS maxStar, ELEMENT_PROGRESS.certificateEarned AS certificateEarned, ELEMENT_PROGRESS.certificateDate AS certificateDate FROM CHAPTER LEFT JOIN ELEMENT ON CHAPTER.chapterId = ELEMENT.chapterId LEFT JOIN ELEMENT_PROGRESS ON ELEMENT.chapterId = ELEMENT_PROGRESS.chapterId AND ELEMENT.elementId = ELEMENT_PROGRESS.elementId WHERE CHAPTER.deleted = 0")
-    LiveData<List<ChapterList>> getChapterElementProgress();
+    @Query("SELECT CHAPTER.chapter_id AS chapterId, CHAPTER.chapter_name AS chapterName, CHAPTER.display_id AS displayId, CHAPTER.deleted AS deleted, ELEMENT.element_id AS elementId, ELEMENT.display_id AS elementDisplayId, ELEMENT.element_type AS elementType, ELEMENT.sb_type AS sbType, ELEMENT.element_name AS elementName, ELEMENT.element_is_deleted AS elementIsDeleted, ELEMENT.user_name AS userName, ELEMENT.milestone_level AS milestoneLevel, ELEMENT.milestone_date AS milestoneDate, ELEMENT.current_progress AS currentProgress, ELEMENT.max_star AS maxStar, ELEMENT.certificate_earned AS certificateEarned, ELEMENT.certificate_date AS certificateDate FROM CHAPTER LEFT JOIN ELEMENT ON CHAPTER.chapter_id = ELEMENT.chapter_id WHERE CHAPTER.deleted = 0")
+    LiveData<List<ChapterElementList>> getChapterElementList();
 }

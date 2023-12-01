@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.base.skillbuilderapi.JsonInfo;
+import com.base.skillbuilderapi.model.elementProgressList.ChapterElementList;
 import com.base.skillbuilderapi.model.elementProgressList.ChapterList;
 import com.base.skillbuilderapi.model.errorHandling.ApiStatusResponse;
 import com.base.skillbuilderapi.model.errorHandling.Resource;
@@ -56,7 +57,8 @@ public class MyViewModel extends AndroidViewModel {
         super.onCleared();
     }
 
-    public LiveData<List<ChapterList>> getChapterElementProgress() {
-        return repository.getChapterElementProgress();
+
+    public LiveData<List<ChapterElementList>> getChapterElementList() {
+        return repository.getChapterElementList();
     }
 }

@@ -3,37 +3,36 @@ package com.base.skillbuilderapi.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.google.gson.annotations.SerializedName;
-
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "ELEMENT_PROGRESS", indices = {@Index(name = "INDEX_ELEMENT_PROGRESS", value = {"chapterId", "elementId", "elementType"},
+@Entity(tableName = "ELEMENT_PROGRESS", indices = {@Index(name = "INDEX_ELEMENT_PROGRESS", value = {"chapter_id", "element_id", "element_type"},
         unique = true)})
 public class ElementProgressEntity implements Parcelable {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    @SerializedName("chapter_id")
+    @ColumnInfo(name = "chapter_id")
     private int chapterId;
-    @SerializedName("element_id")
+    @ColumnInfo(name = "element_id")
     private int elementId;
-    @SerializedName("element_type")
+    @ColumnInfo(name ="element_type")
     private int elementType;
-    @SerializedName("user_name")
+    @ColumnInfo(name ="user_name")
     private String userName;
-    @SerializedName("milestone_level")
+    @ColumnInfo(name ="milestone_level")
     private int milestoneLevel;
-    @SerializedName("milestone_date")
+    @ColumnInfo(name ="milestone_date")
     private long milestoneDate;
-    @SerializedName("current_progress")
+    @ColumnInfo(name ="current_progress")
     private int currentProgress;
-    @SerializedName("max_star")
+    @ColumnInfo(name ="max_star")
     private int maxStar;
-    @SerializedName("certificate_earned")
+    @ColumnInfo(name ="certificate_earned")
     private int certificateEarned;
-    @SerializedName("certificate_date")
+    @ColumnInfo(name ="certificate_date")
     private long certificateDate;
 
     public ElementProgressEntity(int chapterId, int elementId, int elementType, String userName, int milestoneLevel, long milestoneDate, int currentProgress, int maxStar, int certificateEarned, long certificateDate) {
