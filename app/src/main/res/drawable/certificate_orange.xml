@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:id="@+id/outerStroke">
+        <shape android:shape="rectangle" >
+            <stroke android:color="@color/orange"
+                android:width="@dimen/certificate_outer_stroke"/>
+
+            <padding
+                android:bottom="7dp"
+                android:left="7dp"
+                android:right="7dp"
+                android:top="7dp" />
+
+            <corners android:radius="3dp" />
+
+        </shape>
+    </item>
+    <item android:id="@+id/innerStroke">
+        <shape android:shape="rectangle" >
+            <stroke android:color="@color/orange"
+                android:width="@dimen/certificate_inner_stroke"/>
+            <padding
+                android:bottom="5dp"
+                android:left="5dp"
+                android:right="5dp"
+                android:top="5dp" />
+            <corners android:radius="3dp" />
+        </shape>
+    </item>
+</layer-list>

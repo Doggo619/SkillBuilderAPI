@@ -96,11 +96,21 @@
                 android:textStyle="bold"
                 android:textSize="13sp"
                 android:textColor="@color/more_grey"
-                app:layout_constraintBottom_toTopOf="@+id/card"
+                app:layout_constraintBottom_toTopOf="@+id/ivStar"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tvCertificate" />
+
+            <ImageView
+                android:id="@+id/ivStar"
+                android:layout_width="60dp"
+                android:layout_height="25dp"
+                android:src="@drawable/twostar"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tvCertificateOfCompletion" />
 
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card"
@@ -118,7 +128,7 @@
                 app:cardElevation="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvCertificateOfCompletion">
+                app:layout_constraintTop_toBottomOf="@+id/ivStar">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -168,12 +178,30 @@
                         android:textColor="@color/more_grey"
                         android:textSize="12sp"
                         android:textStyle="bold"
+                        app:layout_constraintBottom_toTopOf="@+id/tvAndCompleted"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.5"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/tvAndCompleted"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:gravity="center"
+                        android:text="and completed"
+                        android:textAlignment="center"
+                        android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                        android:textColor="@color/more_grey"
+                        android:textSize="12sp"
+                        android:textStyle="bold"
+                        android:visibility="gone"
                         app:layout_constraintBottom_toTopOf="@+id/tvCompleted"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/tvUserName" />
-
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvCompleted"
                         android:layout_width="match_parent"
@@ -191,7 +219,7 @@
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvBody" />
+                        app:layout_constraintTop_toBottomOf="@+id/tvAndCompleted" />
 
                     <com.google.android.material.textview.MaterialTextView
                         android:id="@+id/tvElementName"
@@ -264,9 +292,7 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="10dp"
-                android:foregroundGravity="center"
-                android:src="@drawable/ic_certificate_icon"
+                android:src="@drawable/ic_certificate_icon_green"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/card" />
 
@@ -285,7 +311,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="@string/certificate_of_achievement"
+                android:text="@string/certificate_of_achievement_proactiveLearner"
                 android:textAlignment="center"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textColor="@color/green"

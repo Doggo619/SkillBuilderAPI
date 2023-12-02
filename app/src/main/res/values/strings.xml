@@ -2,8 +2,19 @@
     <string name="app_name">SkillBuilderAPI</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="congratulation">Congratulations!</string>
-    <string name="certificate_congrats_message_with_vowels">You\'ve won a Proactive Learner Certificate</string>
-    <string name="certificate_of_achievement">Proactive Learner</string>
+    <string name="certificate_congrats_message_with_vowels_proactiveLearner">You\'ve won a Proactive Learner Certificate</string>
+    <string name="certificate_congrats_message_with_vowels_starStudent">You\'ve won a Star Student Certificate</string>
+    <string name="certificate_congrats_message_with_vowels_goodPerformer">You\'ve won a Good Performer Certificate</string>
+    <string name="certificate_of_achievement_proactiveLearner">Proactive Learner</string>
+    <string name="certificate_of_achievement_starStudent">Star Student</string>
+    <string name="certificate_of_achievement_goodPerformer">Good Performer</string>
+    <string name="certificate_of_completion">Certificate of Completion</string>
+    <string name="certificate_of_achievement">Certificate of Achievement</string>
+    <string name="successfully_completed">has successfully completed</string>
+    <string name="successfully_won">has successfully won %d stars </string>
+    <string name="stars"> stars</string>
+    <string name="and_completed">and completed</string>
+    <string name="current_progress">%d%% of the Skill Builder on</string>
     <string name="download">DOWNLOAD</string>
     <string name="share">SHARE</string>
 

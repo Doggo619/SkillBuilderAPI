@@ -19,8 +19,9 @@
             android:id="@+id/tv_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="25dp"
             android:text="10 jun 2023"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="50dp"
             android:textAlignment="viewEnd"
             android:textColor="@color/more_grey"
             android:textStyle="bold" />

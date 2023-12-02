@@ -18,7 +18,7 @@
             android:id="@+id/ivCertificateLogo"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:src="@drawable/ic_certificate_icon"
+            android:src="@drawable/ic_certificate_icon_green"
             app:layout_constraintBottom_toTopOf="@+id/tvCongratulationLabel"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,7 +57,7 @@
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvCongratulationLabel"
-            android:text="You've won a Proactive Learner Certificate" />
+            android:text="@string/certificate_congrats_message_with_vowels_starStudent" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
