@@ -67,6 +67,7 @@ public class ChapterAdapter extends ListAdapter<ChapterList, ChapterAdapter.View
 //        ChapterEntity chapter = chapterLists.get(position);
         ChapterList chapter = getItem(position);
         holder.tvChapterName.setText(chapter.getChapterName());
+
         ProgressAdapter.OnItemClickListener listener = new ProgressAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(ElementProgressList elementProgressList) {
