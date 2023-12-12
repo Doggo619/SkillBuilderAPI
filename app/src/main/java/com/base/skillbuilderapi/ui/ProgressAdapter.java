@@ -46,9 +46,6 @@ public class ProgressAdapter extends ListAdapter<ElementProgressList, ProgressAd
     public interface OnItemClickListener {
         void onItemClick(ElementProgressList elementProgressList);
     }
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        this.onItemClickListener = listener;
-    }
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -60,62 +57,66 @@ public class ProgressAdapter extends ListAdapter<ElementProgressList, ProgressAd
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
         ElementProgressList elementProgressList = getItem(position);
-        Log.d("Progres Adapter", "Element Progress list1" + elementProgressList.toJson());
+        if (elementProgressList.getElementId() != 0) {
+            Log.d("Progres Adapter", "Element Progress list1" + elementProgressList.toJson());
 
-        int milestoneLevel = elementProgressList.getMilestoneLevel();
-        switch (milestoneLevel) {
-            case 0:
-                holder.imageView.setImageResource(R.drawable.milestone_0);
-                holder.ivTick.setVisibility(View.GONE);
-                break;
-            case 1:
-                holder.imageView.setImageResource(R.drawable.milestone_1);
-                holder.ivTick.setVisibility(View.GONE);
-                break;
-            case 2:
-                holder.imageView.setImageResource(R.drawable.milestone_2);
-                holder.ivTick.setVisibility(View.GONE);
-                break;
-            case 3:
-                holder.imageView.setImageResource(R.drawable.milestone_3);
-                holder.ivTick.setVisibility(View.GONE);
-                break;
-            case 4:
-                holder.imageView.setImageResource(R.drawable.milestone_4);
-                holder.ivTick.setVisibility(View.VISIBLE);
-                break;
-            default:
-                holder.imageView.setImageResource(R.drawable.ic_baseline_share_24);
-                break;
-        }
-
-
-        if (elementProgressList.getSbType() > 1) {
-            int maxStar = elementProgressList.getMaxStar();
-            switch (maxStar) {
+            int milestoneLevel = elementProgressList.getMilestoneLevel();
+            switch (milestoneLevel) {
                 case 0:
-                    holder.ivStar.setImageResource(R.drawable.zerostar);
+                    holder.imageView.setImageResource(R.drawable.milestone_0);
+                    holder.ivTick.setVisibility(View.GONE);
                     break;
                 case 1:
-                    holder.ivStar.setImageResource(R.drawable.onestar);
+                    holder.imageView.setImageResource(R.drawable.milestone_1);
+                    holder.ivTick.setVisibility(View.GONE);
                     break;
                 case 2:
-                    holder.ivStar.setImageResource(R.drawable.twostar);
+                    holder.imageView.setImageResource(R.drawable.milestone_2);
+                    holder.ivTick.setVisibility(View.GONE);
                     break;
                 case 3:
-                    holder.ivStar.setImageResource(R.drawable.threestar);
+                    holder.imageView.setImageResource(R.drawable.milestone_3);
+                    holder.ivTick.setVisibility(View.GONE);
+                    break;
+                case 4:
+                    holder.imageView.setImageResource(R.drawable.milestone_4);
+                    holder.ivTick.setVisibility(View.VISIBLE);
                     break;
                 default:
-                    holder.ivStar.setImageResource(R.drawable.ic_baseline_share_24);
+                    holder.imageView.setImageResource(R.drawable.ic_baseline_share_24);
                     break;
             }
-        }
-        holder.itemView.setOnClickListener(view -> {
-            int adapterPosition = holder.getAdapterPosition();
-            if (adapterPosition != RecyclerView.NO_POSITION && onItemClickListener != null) {
-                onItemClickListener.onItemClick(elementProgressList);
+
+
+            if (elementProgressList.getSbType() > 1) {
+                int maxStar = elementProgressList.getMaxStar();
+                switch (maxStar) {
+                    case 0:
+                        holder.ivStar.setImageResource(R.drawable.zerostar);
+                        break;
+                    case 1:
+                        holder.ivStar.setImageResource(R.drawable.onestar);
+                        break;
+                    case 2:
+                        holder.ivStar.setImageResource(R.drawable.twostar);
+                        break;
+                    case 3:
+                        holder.ivStar.setImageResource(R.drawable.threestar);
+                        break;
+                    default:
+                        holder.ivStar.setImageResource(R.drawable.ic_baseline_share_24);
+                        break;
+                }
             }
-        });
+            holder.itemView.setOnClickListener(view -> {
+                int adapterPosition = holder.getAdapterPosition();
+                if (adapterPosition != RecyclerView.NO_POSITION && onItemClickListener != null) {
+                    onItemClickListener.onItemClick(elementProgressList);
+                }
+            });
+        } else {
+            holder.itemView.setVisibility(View.GONE);
+        }
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

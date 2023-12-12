@@ -19,8 +19,6 @@ public interface ChapterDao {
 
     @Query("SELECT * FROM CHAPTER")
     LiveData<List<ChapterEntity>> getAllChapters();
-    @Query("DELETE FROM CHAPTER")
-    void clearAll();
     @Query("SELECT CHAPTER.chapter_id AS chapterId, CHAPTER.chapter_name AS chapterName, CHAPTER.display_id AS displayId, CHAPTER.deleted AS deleted, ELEMENT.element_id AS elementId, ELEMENT.display_id AS elementDisplayId, ELEMENT.element_type AS elementType, ELEMENT.sb_type AS sbType, ELEMENT.element_name AS elementName, ELEMENT.element_is_deleted AS elementIsDeleted, ELEMENT.user_name AS userName, ELEMENT.milestone_level AS milestoneLevel, ELEMENT.milestone_date AS milestoneDate, ELEMENT.current_progress AS currentProgress, ELEMENT.max_star AS maxStar, ELEMENT.certificate_earned AS certificateEarned, ELEMENT.certificate_date AS certificateDate FROM CHAPTER LEFT JOIN ELEMENT ON CHAPTER.chapter_id = ELEMENT.chapter_id WHERE CHAPTER.deleted = 0")
     LiveData<List<ChapterElementList>> getChapterElementList();
 }

@@ -12,7 +12,7 @@ import android.widget.ImageView;
 
 import com.base.skillbuilderapi.JsonInfo;
 import com.base.skillbuilderapi.MockJson;
-import com.base.skillbuilderapi.PicassoCircleTransformation;
+import com.base.skillbuilderapi.utils.PicassoCircleTransformation;
 import com.base.skillbuilderapi.R;
 import com.base.skillbuilderapi.entity.ChapterEntity;
 import com.base.skillbuilderapi.entity.ElementEntity;
@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ChapterAdapter chapterAdapter;
     ImageView profilePicture;
     RecyclerView recyclerView;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

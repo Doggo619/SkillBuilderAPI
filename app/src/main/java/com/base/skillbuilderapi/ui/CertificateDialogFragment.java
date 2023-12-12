@@ -2,31 +2,44 @@ package com.base.skillbuilderapi.ui;
 
 import android.app.Dialog;
 import android.content.res.Configuration;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.icu.text.SimpleDateFormat;
 import android.os.Bundle;
+import android.os.Environment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.utils.widget.ImageFilterView;
 
-import com.base.skillbuilderapi.PicassoCircleTransformation;
+import com.base.skillbuilderapi.utils.DownloadImage;
+import com.base.skillbuilderapi.utils.PicassoCircleTransformation;
 import com.base.skillbuilderapi.R;
 import com.base.skillbuilderapi.model.elementProgressList.ElementProgressList;
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
 
+import java.io.File;
 import java.util.Date;
+import java.util.Locale;
 
 public class CertificateDialogFragment extends DialogFragment {
     MaterialTextView userName, elementName, chapterName, date, congratsMessage, certificateName, certificateOfDash, successfully, andCompleted, skillBuilder;
     ImageView profilePicture, border, certificateLogo, mainCertificateLogo, star;
     ImageFilterView closeIcon;
+    MaterialButton share, download;
+    MaterialCardView certificateCard;
+    private static final int REQUEST_CODE = 1000;
+
+
 
     @Nullable
     @Override
@@ -51,6 +64,16 @@ public class CertificateDialogFragment extends DialogFragment {
         successfully = view.findViewById(R.id.tvBody);
         andCompleted = view.findViewById(R.id.tvAndCompleted);
         skillBuilder = view.findViewById(R.id.tvCompleted);
+        share = view.findViewById(R.id.btnShareCertificate);
+        download = view.findViewById(R.id.btnDownloadCertificate);
+        certificateCard = view.findViewById(R.id.certificateCard);
+
+        download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                downloadImage();
+            }
+        });
 
         closeIcon.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -171,6 +194,15 @@ public class CertificateDialogFragment extends DialogFragment {
         return view;
     }
 
+    private void downloadImage() {
+        Bitmap certificateBitmap = DownloadImage.viewToBitmap(certificateCard);
+        String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String fileName = "MathZap_Certificate_" + timestamp + ".jpg";
+        String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + fileName;
+        DownloadImage.saveBitmapAsJpeg(certificateBitmap, filePath);
+        Toast.makeText(requireContext(), "Certificate downloaded successfully", Toast.LENGTH_SHORT).show();
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -190,4 +222,5 @@ public class CertificateDialogFragment extends DialogFragment {
             }
         }
     }
+
 }

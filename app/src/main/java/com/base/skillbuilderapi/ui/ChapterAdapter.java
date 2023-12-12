@@ -26,9 +26,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChapterAdapter extends ListAdapter<ChapterList, ChapterAdapter.ViewHolder> {
-    private List<ElementEntity> elementLists;
-    private List<ElementProgressEntity> progressLists;
-    private List<ChapterEntity> chapterLists;
     private OnItemClickListener onItemClickListener;
     private Context context;
 
@@ -64,7 +61,6 @@ public class ChapterAdapter extends ListAdapter<ChapterList, ChapterAdapter.View
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        ChapterEntity chapter = chapterLists.get(position);
         ChapterList chapter = getItem(position);
         holder.tvChapterName.setText(chapter.getChapterName());
 
@@ -83,44 +79,6 @@ public class ChapterAdapter extends ListAdapter<ChapterList, ChapterAdapter.View
             progressAdapter.submitList(chapter.getElementProgressList());
         }
     }
-
-    private List<ElementProgressEntity> getProgressListForChapter(int chapterId) {
-        List<ElementProgressEntity> filteredList = new ArrayList<>();
-
-        for (ElementProgressEntity progressEntity : progressLists) {
-            for (ElementEntity elementEntity : elementLists) {
-                if (progressEntity.getChapterId() == chapterId && elementEntity.getChapterId() == chapterId) {
-                    filteredList.add(progressEntity);
-                }
-            }
-        }
-        return filteredList;
-    }
-
-    private List<ElementEntity> getElementListForChapter(int chapterId) {
-        List<ElementEntity> filteredList = new ArrayList<>();
-        for (ElementEntity elementEntity : elementLists) {
-            if (elementEntity.getChapterId() == chapterId) {
-                filteredList.add(elementEntity);
-            }
-        }
-        return filteredList;
-    }
-
-    private List<ChapterEntity> getChapterListForChapter(int chapterId) {
-        List<ChapterEntity> filteredList = new ArrayList<>();
-        for (ChapterEntity chapterEntity : chapterLists) {
-            if (chapterEntity.getChapterId() == chapterId) {
-                filteredList.add(chapterEntity);
-            }
-        }
-        return filteredList;
-    }
-//    @Override
-//    public int getItemCount() {
-//        return chapterLists.size() != 0 ? chapterLists.size() : 0;
-//    }
-
     public static class ViewHolder extends RecyclerView.ViewHolder {
         MaterialTextView tvChapterName;
         RecyclerView rvImages;

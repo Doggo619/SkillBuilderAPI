@@ -1,4 +1,4 @@
-package com.base.skillbuilderapi;
+package com.base.skillbuilderapi.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;

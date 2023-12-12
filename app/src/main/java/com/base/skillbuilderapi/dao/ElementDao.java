@@ -19,8 +19,6 @@ public interface ElementDao {
 
     @Query("SELECT * FROM ELEMENT")
     LiveData<List<ElementEntity>> getAllElements();
-    @Query("DELETE FROM ELEMENT")
-    void clearAll();
     @Update
     void updateElement(ElementEntity elementEntity);
 

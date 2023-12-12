@@ -17,6 +17,4 @@ public interface ElementProgressDao {
 
     @Query("SELECT * FROM ELEMENT_PROGRESS")
     LiveData<List<ElementProgressEntity>> getAllElementProgress();
-    @Query("DELETE FROM ELEMENT_PROGRESS")
-    void clearAll();
 }
