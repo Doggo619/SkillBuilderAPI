@@ -1,13 +1,17 @@
 package com.base.skillbuilderapi.ui;
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.icu.text.SimpleDateFormat;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +31,7 @@ import com.google.android.material.card.MaterialCardView;
 import com.google.android.material.textview.MaterialTextView;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.Date;
 import java.util.Locale;
@@ -37,9 +42,6 @@ public class CertificateDialogFragment extends DialogFragment {
     ImageFilterView closeIcon;
     MaterialButton share, download;
     MaterialCardView certificateCard;
-    private static final int REQUEST_CODE = 1000;
-
-
 
     @Nullable
     @Override
@@ -71,7 +73,13 @@ public class CertificateDialogFragment extends DialogFragment {
         download.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                downloadImage();
+                downloadCertificate();
+            }
+        });
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                shareCertificate();
             }
         });
 
@@ -194,13 +202,60 @@ public class CertificateDialogFragment extends DialogFragment {
         return view;
     }
 
-    private void downloadImage() {
+    private String generateCertificateName(int certificateEarned) {
+        switch (certificateEarned) {
+            case 4001:
+                return "Proactive Learner";
+            case 4002:
+                return "Good Performer";
+            default:
+                return "Star Student";
+        }
+    }
+
+    private void downloadCertificate() {
         Bitmap certificateBitmap = DownloadImage.viewToBitmap(certificateCard);
-        String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
-        String fileName = "MathZap_Certificate_" + timestamp + ".jpg";
-        String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + fileName;
-        DownloadImage.saveBitmapAsJpeg(certificateBitmap, filePath);
-        Toast.makeText(requireContext(), "Certificate downloaded successfully", Toast.LENGTH_SHORT).show();
+
+        Bundle args = getArguments();
+        if (args != null) {
+            ElementProgressList elementProgress = ElementProgressList.fromJson(args.getString("ElementProgressList"));
+            int certificateEarned = elementProgress.getCertificateEarned();
+
+            String certificateName = generateCertificateName(certificateEarned);
+            String timestamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+            String fileName = "MathZap_Certificate_" + certificateName + "_" + timestamp + ".jpg";
+            String filePath = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + File.separator + fileName;
+            DownloadImage.saveBitmapAsJpeg(certificateBitmap, filePath);
+            Toast.makeText(requireContext(), "Certificate downloaded successfully", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void shareCertificate() {
+        Bitmap certificateBitmap = DownloadImage.viewToBitmap(certificateCard);
+        Bundle args = getArguments();
+        if (args != null) {
+            ElementProgressList elementProgress = ElementProgressList.fromJson(args.getString("ElementProgressList"));
+            int certificateEarned = elementProgress.getCertificateEarned();
+
+            String certificateName = generateCertificateName(certificateEarned);
+            Uri contentUri = getImageUri(requireContext(), certificateBitmap);
+
+            Intent shareIntent = new Intent(Intent.ACTION_SEND);
+            shareIntent.setType("image/jpeg");
+            shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri);
+            shareIntent.putExtra(Intent.EXTRA_TEXT, "Check out my " + certificateName + " certificate!" );
+
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+            startActivity(Intent.createChooser(shareIntent, "Share Certificate"));
+        }
+    }
+
+    private Uri getImageUri(Context context, Bitmap image) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        image.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), image, "Certificate Image Placeholder Text", null);
+        return Uri.parse(path);
     }
 
     @Override
